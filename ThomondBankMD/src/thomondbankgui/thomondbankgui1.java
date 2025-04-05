@@ -2,9 +2,13 @@ package thomondbankgui;
 
 import Model.Account;
 import Model.CurrentAccount;
-import Model.DepositAccount
+import Model.DepositAccount;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class thomondbankgui1 extends JFrame {
@@ -36,8 +40,44 @@ public class thomondbankgui1 extends JFrame {
     }
 
     public thomondbankgui1() {
-        initComponents();
         populateMyAccounts();
+
+
+        accountIdTxt.addActionListener(e ->{
+                for (Account account : thomondAccounts) {
+                    if (account.getId() == Integer.parseInt(accountIdTxt.getText())) {
+                        depositRadBtn.setVisible(true);
+                        currentRadBtn.setVisible(true);
+                        withdrawBtn.setVisible(true);
+                        checkBalanceBtn.setVisible(true);
+                        logoutBtn.setVisible(true);
+                        depositBtn.setVisible(true);
+                        if (account instanceof DepositAccount){
+                            depositRadBtn.setSelected(true);
+                        }
+                        else if (account instanceof CurrentAccount){
+                            currentRadBtn.setSelected(true);
+                        }
+                        break;
+                    }
+                }
+
+        });
+
+        logoutBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                accountIdTxt.setText("");
+                depositRadBtn.setSelected(false);
+                currentRadBtn.setSelected(false);
+                depositRadBtn.setVisible(false);
+                currentRadBtn.setVisible(false);
+                withdrawBtn.setVisible(false);
+                checkBalanceBtn.setVisible(false);
+                logoutBtn.setVisible(false);
+                depositBtn.setVisible(false);
+            }
+        });
     }
 
     private void populateMyAccounts() {
@@ -50,7 +90,6 @@ public class thomondbankgui1 extends JFrame {
         thomondAccounts.get(2).deposit(300);
         thomondAccounts.add(new DepositAccount(4, 4));
         thomondAccounts.get(3).deposit(300);
-        thomondAccounts.add(new CurrentAccount(4, 1, 100));
         thomondAccounts.add(new CurrentAccount(5, 2, 1000));
         thomondAccounts.add(new CurrentAccount(6, 4, 200));
 

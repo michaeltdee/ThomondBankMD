@@ -3,16 +3,14 @@ package Model;
 import java.time.LocalDate;
 
 public abstract class Account {
-    int id;
-    int custNo;
-    double balance;
-    LocalDate dateCreated;
+    private int id;
+    private int custNo;
+    private double balance;
+    private LocalDate dateCreated;
 
-    public Account(int id, int custNo, double balance, LocalDate dateCreated) {
+    public Account(int id, int custNo) {
         this.id = id;
         this.custNo = custNo;
-        this.balance = balance;
-        this.dateCreated = dateCreated;
     }
 
     public int getId() {

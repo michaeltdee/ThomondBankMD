@@ -4,9 +4,11 @@ import java.time.LocalDate;
 
 public class CurrentAccount extends Account {
     private static double AIR = 0.005;
+    double overdraft;
 
-    public CurrentAccount(int id, int custNo, double balance, LocalDate dateCreated) {
-        super(id, custNo, balance, dateCreated);
+    public CurrentAccount(int id, int custNo, double overdraft) {
+        super(id, custNo);
+        this.overdraft = overdraft;
     }
 
     @Override
