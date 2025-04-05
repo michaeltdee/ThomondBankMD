@@ -11,11 +11,11 @@ public class DepositAccount extends Account {
 
     @Override
     public void deposit(double amount) {
-
+        balance+=amount;
     }
 
     @Override
     public void withdraw(double amount) {
-
+        balance-=amount;
     }
 }

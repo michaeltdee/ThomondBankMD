@@ -78,7 +78,7 @@
                 </constraints>
                 <properties>
                   <text value="Check Balance"/>
-                  <visible value="false"/>
+                  <visible value="true"/>
                 </properties>
               </component>
               <component id="8cb96" class="javax.swing.JButton" binding="logoutBtn">

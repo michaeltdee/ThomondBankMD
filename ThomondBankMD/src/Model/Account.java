@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public abstract class Account {
     private int id;
     private int custNo;
-    private double balance;
+    protected double balance;
     private LocalDate dateCreated;
 
     public Account(int id, int custNo) {

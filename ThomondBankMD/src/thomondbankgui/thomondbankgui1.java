@@ -51,8 +51,8 @@ public class thomondbankgui1 extends JFrame {
                         withdrawBtn.setVisible(true);
                         checkBalanceBtn.setVisible(true);
                         logoutBtn.setVisible(true);
-                        depositBtn.setVisible(true);
                         if (account instanceof DepositAccount){
+                            depositBtn.setVisible(true);
                             depositRadBtn.setSelected(true);
                         }
                         else if (account instanceof CurrentAccount){
@@ -76,6 +76,36 @@ public class thomondbankgui1 extends JFrame {
                 checkBalanceBtn.setVisible(false);
                 logoutBtn.setVisible(false);
                 depositBtn.setVisible(false);
+            }
+        });
+        depositBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText()));
+                String depositInput=JOptionPane.showInputDialog("Enter deposit amount");
+                double depositAmount=Double.parseDouble(depositInput);
+                if (selectedAccount instanceof DepositAccount){
+                    selectedAccount.deposit(depositAmount);
+                    JOptionPane.showMessageDialog(null, "Deposited Successfully\nNew Balance: €"+selectedAccount.getBalance());
+                }
+                else if (selectedAccount instanceof CurrentAccount){
+                    JOptionPane.showMessageDialog(null, "Cannot Deposit in a current account");
+                }
+            }
+        });
+        withdrawBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText()));
+                String withdrawInput=JOptionPane.showInputDialog(null, "Current balance: "+selectedAccount.getBalance()+"\nPlease enter withdraw amount");
+                double withdrawAmount=Double.parseDouble(withdrawInput);
+                if (withdrawAmount<=selectedAccount.getBalance()){
+                    selectedAccount.withdraw(withdrawAmount);
+                    JOptionPane.showMessageDialog(null,"Withdraw successfully\nNew Balance: "+selectedAccount.getBalance());
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Withdraw exceeds current balance");
+                }
             }
         });
     }
