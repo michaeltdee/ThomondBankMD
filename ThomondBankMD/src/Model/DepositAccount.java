@@ -18,4 +18,12 @@ public class DepositAccount extends Account {
     public void withdraw(double amount) {
         balance-=amount;
     }
+
+    public static double getAIR() {
+        return AIR;
+    }
+
+    public static void setAIR(double AIR) {
+        DepositAccount.AIR = AIR;
+    }
 }

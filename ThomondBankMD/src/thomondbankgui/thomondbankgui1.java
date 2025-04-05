@@ -99,13 +99,20 @@ public class thomondbankgui1 extends JFrame {
                 Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText()));
                 String withdrawInput=JOptionPane.showInputDialog(null, "Current balance: "+selectedAccount.getBalance()+"\nPlease enter withdraw amount");
                 double withdrawAmount=Double.parseDouble(withdrawInput);
-                if (withdrawAmount<=selectedAccount.getBalance()){
+                if (withdrawAmount<=selectedAccount.getBalance() && selectedAccount instanceof DepositAccount){
                     selectedAccount.withdraw(withdrawAmount);
                     JOptionPane.showMessageDialog(null,"Withdraw successfully\nNew Balance: "+selectedAccount.getBalance());
                 }
-                else {
-                    JOptionPane.showMessageDialog(null, "Withdraw exceeds current balance");
+                else if (selectedAccount instanceof CurrentAccount && withdrawAmount<=selectedAccount.getBalance()+((CurrentAccount) selectedAccount).getOverdraft()){
+                    selectedAccount.withdraw(withdrawAmount);
                 }
+            }
+        });
+        checkBalanceBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText()));
+                JOptionPane.showMessageDialog(null, "Account ID: " + selectedAccount.getId()+"\nCurrent balance: " + selectedAccount.getBalance());
             }
         });
     }

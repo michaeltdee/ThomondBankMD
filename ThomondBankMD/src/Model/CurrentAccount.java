@@ -20,4 +20,20 @@ public class CurrentAccount extends Account {
     public void withdraw(double amount) {
 
     }
+
+    public static double getAIR() {
+        return AIR;
+    }
+
+    public static void setAIR(double AIR) {
+        CurrentAccount.AIR = AIR;
+    }
+
+    public double getOverdraft() {
+        return overdraft;
+    }
+
+    public void setOverdraft(double overdraft) {
+        this.overdraft = overdraft;
+    }
 }
