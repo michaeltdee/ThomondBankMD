@@ -3,13 +3,16 @@ package thomondbankgui;
 import Model.Account;
 import Model.CurrentAccount;
 import Model.DepositAccount;
+import changeairgui.changeairgui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import changeoverdraftgui.changeoverdraftgui;
 
 public class thomondbankgui1 extends JFrame {
 
@@ -115,6 +118,18 @@ public class thomondbankgui1 extends JFrame {
                 JOptionPane.showMessageDialog(null, "Account ID: " + selectedAccount.getId()+"\nCurrent balance: " + selectedAccount.getBalance());
             }
         });
+        changeAIRBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showAirGui();
+            }
+        });
+        changeOverdraftLimitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showOverdraftGui();
+            }
+        });
     }
 
     private void populateMyAccounts() {
@@ -130,5 +145,24 @@ public class thomondbankgui1 extends JFrame {
         thomondAccounts.add(new CurrentAccount(5, 2, 1000));
         thomondAccounts.add(new CurrentAccount(6, 4, 200));
 
+    }
+    private void showAirGui() {
+        changeairgui changeairgui = new changeairgui();
+
+        JDialog dialog = new JDialog((Frame) null, "Popup", true);
+        dialog.setContentPane(changeairgui.rootPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null); // Center on screen
+        dialog.setVisible(true);
+    }
+
+    private void showOverdraftGui() {
+        changeoverdraftgui  changeoverdraftgui = new changeoverdraftgui();
+
+        JDialog dialog = new JDialog((Frame) null, "Popup", true);
+        dialog.setContentPane(changeoverdraftgui.rootPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null); // Center on screen
+        dialog.setVisible(true);
     }
 }
