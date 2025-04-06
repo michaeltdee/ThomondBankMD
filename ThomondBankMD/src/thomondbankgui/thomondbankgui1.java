@@ -13,6 +13,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import changeoverdraftgui.changeoverdraftgui;
+import createaccountgui.createaccountgui;
 
 public class thomondbankgui1 extends JFrame {
 
@@ -48,7 +49,7 @@ public class thomondbankgui1 extends JFrame {
 
         accountIdTxt.addActionListener(e ->{
                 for (Account account : thomondAccounts) {
-                    if (account.getId() == Integer.parseInt(accountIdTxt.getText())) {
+                    if (account.getId() == Integer.parseInt(accountIdTxt.getText())-1) {
                         depositRadBtn.setVisible(true);
                         currentRadBtn.setVisible(true);
                         withdrawBtn.setVisible(true);
@@ -84,7 +85,7 @@ public class thomondbankgui1 extends JFrame {
         depositBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText()));
+                Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText())-1);
                 String depositInput=JOptionPane.showInputDialog("Enter deposit amount");
                 double depositAmount=Double.parseDouble(depositInput);
                 if (selectedAccount instanceof DepositAccount){
@@ -99,22 +100,32 @@ public class thomondbankgui1 extends JFrame {
         withdrawBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText()));
+                Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText())-1);
                 String withdrawInput=JOptionPane.showInputDialog(null, "Current balance: "+selectedAccount.getBalance()+"\nPlease enter withdraw amount");
-                double withdrawAmount=Double.parseDouble(withdrawInput);
-                if (withdrawAmount<=selectedAccount.getBalance() && selectedAccount instanceof DepositAccount){
-                    selectedAccount.withdraw(withdrawAmount);
-                    JOptionPane.showMessageDialog(null,"Withdraw successfully\nNew Balance: "+selectedAccount.getBalance());
+                if (selectedAccount instanceof DepositAccount){
+                    double withdrawAmount=Double.parseDouble(withdrawInput);
+                    if (withdrawAmount <= selectedAccount.getBalance()){
+                        selectedAccount.withdraw(withdrawAmount);
+                        JOptionPane.showMessageDialog(null,"Withdraw successfully\nNew Balance: "+selectedAccount.getBalance());
+                    } else if (withdrawAmount > selectedAccount.getBalance()) {
+                        JOptionPane.showMessageDialog(null, "Amount exceeds current balance");
+                    }
                 }
-                else if (selectedAccount instanceof CurrentAccount && withdrawAmount<=selectedAccount.getBalance()+((CurrentAccount) selectedAccount).getOverdraft()){
-                    selectedAccount.withdraw(withdrawAmount);
+                else if (selectedAccount instanceof CurrentAccount){
+                    double withdrawAmount=Double.parseDouble(withdrawInput+selectedAccount.getBalance());
+                    if (withdrawAmount <= selectedAccount.getBalance()){
+                        JOptionPane.showMessageDialog(null,"Withdraw successfully\nNew Balance: "+selectedAccount.getBalance());
+                    }
+                    else if (withdrawAmount > selectedAccount.getBalance()) {
+                        JOptionPane.showMessageDialog(null, "Amount exceeds current balance");
+                    }
                 }
             }
         });
         checkBalanceBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText()));
+                Account selectedAccount = thomondAccounts.get(Integer.parseInt(accountIdTxt.getText())-1);
                 JOptionPane.showMessageDialog(null, "Account ID: " + selectedAccount.getId()+"\nCurrent balance: " + selectedAccount.getBalance());
             }
         });
@@ -128,6 +139,12 @@ public class thomondbankgui1 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showOverdraftGui();
+            }
+        });
+        createAccountBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showCreateAccountGui();
             }
         });
     }
@@ -152,7 +169,7 @@ public class thomondbankgui1 extends JFrame {
         JDialog dialog = new JDialog((Frame) null, "Popup", true);
         dialog.setContentPane(changeairgui.rootPanel);
         dialog.pack();
-        dialog.setLocationRelativeTo(null); // Center on screen
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
 
@@ -162,7 +179,16 @@ public class thomondbankgui1 extends JFrame {
         JDialog dialog = new JDialog((Frame) null, "Popup", true);
         dialog.setContentPane(changeoverdraftgui.rootPanel);
         dialog.pack();
-        dialog.setLocationRelativeTo(null); // Center on screen
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
+    private void showCreateAccountGui() {
+        createaccountgui createaccountgui = new createaccountgui();
+
+        JDialog dialog = new JDialog((Frame) null, "Popup", true);
+        dialog.setContentPane(createaccountgui.rootPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
 }
