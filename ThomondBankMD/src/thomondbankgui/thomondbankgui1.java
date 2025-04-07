@@ -40,6 +40,7 @@ public class thomondbankgui1 extends JFrame {
         frame.setContentPane(new thomondbankgui1().rootPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -49,7 +50,7 @@ public class thomondbankgui1 extends JFrame {
 
         accountIdTxt.addActionListener(e ->{
                 for (Account account : thomondAccounts) {
-                    if (account.getId() == Integer.parseInt(accountIdTxt.getText())-1) {
+                    if (account.getId() == Integer.parseInt(accountIdTxt.getText())) {
                         depositRadBtn.setVisible(true);
                         currentRadBtn.setVisible(true);
                         withdrawBtn.setVisible(true);
