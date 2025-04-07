@@ -45,15 +45,21 @@ public class createaccountgui {
         addNewAccountBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Account account : thomondAccounts){
+                try {
                     int newCustNo = Integer.parseInt(accountIdTxt.getText());
-                    if (depositRadBtn.isSelected()){
-                        thomondAccounts.add(new DepositAccount(thomondAccounts.size(), newCustNo));
-                    }
-                    else if (currentRadBtn.isSelected()){
+
+                    if (depositRadBtn.isSelected()) {
+                        thomondAccounts.add(new DepositAccount(thomondAccounts.size() + 1, newCustNo));
+                        JOptionPane.showMessageDialog(null, "Deposit Account created successfully!");
+                    } else if (currentRadBtn.isSelected()) {
                         double overdraftAmount = Double.parseDouble(overdraftTxt.getText());
-                        thomondAccounts.add(new CurrentAccount(thomondAccounts.size(), newCustNo, overdraftAmount));
+                        thomondAccounts.add(new CurrentAccount(thomondAccounts.size() + 1, newCustNo, overdraftAmount));
+                        JOptionPane.showMessageDialog(null, "Current Account created successfully!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select an account type.");
                     }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Please enter valid numbers for Account ID and Overdraft.");
                 }
             }
         });

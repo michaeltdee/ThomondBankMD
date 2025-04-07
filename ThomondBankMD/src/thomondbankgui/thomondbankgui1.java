@@ -55,8 +55,8 @@ public class thomondbankgui1 extends JFrame {
                         withdrawBtn.setVisible(true);
                         checkBalanceBtn.setVisible(true);
                         logoutBtn.setVisible(true);
+                        depositBtn.setVisible(true);
                         if (account instanceof DepositAccount){
-                            depositBtn.setVisible(true);
                             depositRadBtn.setSelected(true);
                         }
                         else if (account instanceof CurrentAccount){
